@@ -1,0 +1,613 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,tabularx,array}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{bookmark}
+
+\geometry{margin=0.90in,headheight=14pt}
+\allowdisplaybreaks[1]
+\setlength{\parindent}{1.25em}
+\setlength{\parskip}{0.25em}
+\setlist[itemize]{leftmargin=1.6em,itemsep=0.2em,topsep=0.3em}
+\emergencystretch=2em
+
+\definecolor{codebg}{RGB}{246,247,249}
+\definecolor{codeframe}{RGB}{210,214,220}
+\lstdefinestyle{sage}{
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codeframe},
+  basicstyle=\ttfamily\scriptsize,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  breaklines=true,
+  xleftmargin=0.35em,
+  xrightmargin=0.35em,
+  aboveskip=0.7em,
+  belowskip=0.7em
+}
+\lstdefinestyle{output}{
+  style=sage,
+  language={}
+}
+
+\newtheorem{theorem}{Teorema}
+\newtheorem{corollary}{Corolário}
+\theoremstyle{definition}
+\newtheorem{definition}{Definição}
+
+\newcommand{\Dd}[2]{D_{#1}\!\left(#2\right)}
+\newcommand{\Layer}[1]{\mathcal{L}_{#1}}
+\newcommand{\PhiH}[3]{\Phi_{#1}\!\left(#2,#3\right)}
+\renewcommand{\tablename}{Tabela}
+\renewcommand{\refname}{Referências}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small Interseção entre diferenças progressivas cúbicas e quárticas}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+\hypersetup{
+  pdftitle={Interseção entre diferenças progressivas cúbicas e quárticas},
+  pdfauthor={Zaqueu Ribeiro},
+  pdfsubject={Classificação completa de D3(n)=D4(m) por meio de uma curva elíptica},
+  pdfkeywords={diferenças progressivas, curvas elípticas, pontos inteiros, formas ciclotômicas},
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue
+}
+
+\title{\textbf{Interseção entre diferenças progressivas cúbicas e quárticas}\\[0.45em]
+\large\itshape Classificação completa por meio de uma curva elíptica}
+\author{\textbf{Zaqueu Ribeiro}\\
+\small Pesquisador independente, Almenara, Minas Gerais, Brasil}
+\date{\small Pré-publicação, versão 1, 17 de setembro de 2026}
+
+\begin{document}
+
+\maketitle
+
+\renewcommand{\abstractname}{Resumo}
+\begin{abstract}
+Definimos
+\[
+  \Dd{d}{n}=(n+1)^d-n^d
+\]
+e determinamos todas as soluções inteiras não negativas da igualdade
+\(\Dd{3}{n}=\Dd{4}{m}\).
+Uma mudança de variáveis envia cada solução a um ponto inteiro da curva elíptica
+\[
+  E:\quad Y^2=X^3+36X-108
+\]
+sujeito a duas congruências. O cálculo certificado do grupo de Mordell-Weil fornece posto \(1\), torção trivial e gerador \((6,18)\). A enumeração completa dos pontos inteiros de \(E\) produz somente seis pontos afins. Depois do filtro congruencial, restam a solução trivial \((0,0)\) e a solução positiva \((70,15)\). Consequentemente, as camadas positivas de expoentes \(3\) e \(4\) intersectam-se apenas no valor \(14911\). Também registramos a fatoração ciclotômica da colisão e formulamos em linguagem padrão os objetos chamados cartograficamente de âncora, pilar e elevação.
+
+\medskip
+\noindent\textbf{Palavras-chave:} diferenças progressivas; equações diofantinas; curvas elípticas; pontos inteiros; formas ciclotômicas.
+\end{abstract}
+
+\renewcommand{\abstractname}{Abstract}
+\begin{abstract}
+Let
+\[
+  \Dd{d}{n}=(n+1)^d-n^d.
+\]
+We determine all nonnegative integer solutions of
+\(\Dd{3}{n}=\Dd{4}{m}\).
+An exact change of variables maps every solution to an integral point on the elliptic curve
+\[
+  E:\quad Y^2=X^3+36X-108
+\]
+satisfying two congruence conditions. A proof-enabled computation of the Mordell-Weil group gives rank \(1\), trivial torsion, and generator \((6,18)\). The complete integral-point set of \(E\) contains six affine points. The congruence filter leaves only \((0,0)\) and \((70,15)\). Hence the positive exponent-\(3\) and exponent-\(4\) value layers intersect only at \(14911\). We also record the cyclotomic factorization of this collision and give formal counterparts for the cartographic terms anchor, pillar, and lifting.
+
+\medskip
+\noindent\textbf{Keywords:} forward differences; Diophantine equations; elliptic curves; integral points; cyclotomic forms.
+\end{abstract}
+
+\section{Introdução}
+
+A primeira diferença progressiva da função potência transforma uma sequência de potências em uma família de polinômios inteiros. Interseções entre os conjuntos de valores desses polinômios conduzem a equações diofantinas cuja geometria depende dos expoentes envolvidos. Esta nota resolve completamente o primeiro cruzamento não linear entre as camadas cúbica e quártica.
+
+\begin{equation}
+  \Dd{d}{n}=(n+1)^d-n^d=\Delta(n^d).
+  \label{eq:forward}
+\end{equation}
+
+O problema considerado é determinar os pares de inteiros positivos \((n,m)\) para os quais
+\(\Dd{3}{n}=\Dd{4}{m}\).
+Uma busca finita identifica a igualdade
+\(\Dd{3}{70}=\Dd{4}{15}=14911\),
+mas não pode excluir soluções posteriores. A completude exige substituir o limite de busca por uma classificação de pontos integrais sobre uma curva elíptica.
+
+O resultado central mostra que \(14911\) é o único valor positivo compartilhado. A demonstração tem duas partes. Primeiro, uma transformação algébrica exata converte a equação original em um problema de pontos inteiros com condições de congruência. Segundo, uma base completa e saturada do grupo de Mordell-Weil permite a enumeração certificada de todos os pontos inteiros da curva. O uso computacional é explicitado na Seção~\ref{sec:certificate} e pode ser reproduzido pelo código do Apêndice~\ref{app:sage}.
+
+Os termos cartográficos usados durante a descoberta são preservados apenas como aliases intuitivos. O argumento formal emprega diferenças progressivas, formas ciclotômicas avaliadas, dados locais de raízes modulares, divisores comuns de componentes ciclotômicos e levantamento divisorial.
+
+\section{Diferenças progressivas e formas ciclotômicas}
+
+\subsection{Camadas de valores}
+
+Para cada inteiro \(d\geq 1\), define-se a camada positiva de valores
+\begin{equation}
+  \Layer{d}=\left\{\Dd{d}{n}:n\in\mathbb{Z}_{\geq 1}\right\}.
+  \label{eq:layer}
+\end{equation}
+
+O índice \(d\) será chamado de expoente, e não de dimensão, no corpo formal do texto. A linguagem dimensional permanece útil na interpretação cartográfica, mas não participa dos enunciados.
+
+\subsection{Decomposição ciclotômica}
+
+Se \(\Phi_q(X,Y)\) denota a forma ciclotômica homogênea de índice \(q\), então \(X^d-Y^d\) é o produto das formas \(\Phi_q(X,Y)\) com \(q\) divisor de \(d\). Como \(\Phi_1(n+1,n)=1\), segue a fatoração
+\begin{equation}
+  \Dd{d}{n}
+  =\prod_{\substack{q\mid d\\q>1}}\Phi_q(n+1,n).
+  \label{eq:cyclotomic}
+\end{equation}
+
+Essa identidade separa cada camada composta em componentes associados aos divisores do expoente. Ela também explica a divisibilidade
+\(\Dd{d}{n}\mid\Dd{e}{n}\)
+sempre que \(d\mid e\).
+
+\subsection{Nomenclatura formal}
+
+Fixados \(q\) e um primo \(p\), define-se
+\[
+  R_{q,p}
+  =\left\{r\pmod p:\Phi_q(r+1,r)\equiv0\pmod p\right\}.
+\]
+O par \((p,R_{q,p})\), com o índice \(q\) registrado, será chamado de \emph{dado local de raiz ciclotômica}. Na terminologia cartográfica, esse objeto é uma âncora.
+
+Em uma colisão \(\Dd{d}{n}=\Dd{e}{m}\), um máximo divisor comum não trivial entre valores de componentes ou subprodutos ciclotômicos será chamado de \emph{divisor comum de componentes ciclotômicos avaliados}. Na terminologia cartográfica, esse divisor é um pilar.
+
+Para \(d\mid e\), a passagem de \(\Dd{d}{n}\) para \(\Dd{e}{n}\) será chamada de \emph{levantamento divisorial ciclotômico}, e o quociente \(\Dd{e}{n}/\Dd{d}{n}\) será o cofator de levantamento. Esses nomes são definições locais deste trabalho; não se afirma que constituam terminologia consolidada na literatura.
+
+\section{Resultado principal}
+
+\begin{theorem}
+Para \(n,m\in\mathbb{Z}_{\geq0}\), a igualdade
+\[
+  (n+1)^3-n^3=(m+1)^4-m^4
+\]
+ocorre se, e somente se,
+\((n,m)=(0,0)\) ou \((n,m)=(70,15)\).
+\end{theorem}
+
+Equivalentemente,
+\begin{equation}
+  (n+1)^3-n^3=(m+1)^4-m^4
+  \quad\Longleftrightarrow\quad
+  (n,m)\in\{(0,0),(70,15)\}.
+  \label{eq:theorem}
+\end{equation}
+
+\begin{corollary}
+Para as camadas positivas definidas em \eqref{eq:layer}, a única interseção entre os expoentes \(3\) e \(4\) é o valor \(14911\).
+\end{corollary}
+
+\begin{equation}
+  \Layer{3}\cap\Layer{4}=\{14911\}.
+  \label{eq:intersection}
+\end{equation}
+
+A solução positiva verifica-se diretamente:
+\[
+  \Dd{3}{70}=71^3-70^3=14911,
+  \qquad
+  \Dd{4}{15}=16^4-15^4=14911.
+\]
+As seções seguintes provam que não existem outras soluções.
+
+\section{Redução a uma curva elíptica}
+
+\subsection{Mudança de variáveis}
+
+A expansão das duas diferenças fornece
+\begin{equation}
+  \Dd{3}{n}=3n^2+3n+1,
+  \qquad
+  \Dd{4}{m}=4m^3+6m^2+4m+1.
+  \label{eq:expansion}
+\end{equation}
+
+Introduza as variáveis ímpares
+\(u=2m+1\) e \(v=2n+1\). Então
+\begin{equation}
+  \Dd{4}{m}=\frac{u^3+u}{2},
+  \qquad
+  \Dd{3}{n}=\frac{3v^2+1}{4}.
+  \label{eq:uv}
+\end{equation}
+
+Logo, \(\Dd{3}{n}=\Dd{4}{m}\) equivale exatamente a
+\begin{equation}
+  3v^2=2u^3+2u-1.
+  \label{eq:uvcurve}
+\end{equation}
+
+Escalando as coordenadas por
+\begin{equation}
+  X=6u=6(2m+1),
+  \qquad
+  Y=18v=18(2n+1),
+  \label{eq:coordinates}
+\end{equation}
+obtém-se a equação de Weierstrass
+\begin{equation}
+  E:\qquad Y^2=X^3+36X-108.
+  \label{eq:curve}
+\end{equation}
+
+A curva é não singular, pois seu discriminante é diferente de zero:
+\begin{equation}
+  \Delta_E
+  =-16\left(4\cdot36^3+27\cdot(-108)^2\right)
+  =-8024832\neq0.
+  \label{eq:discriminant}
+\end{equation}
+
+\subsection{Filtro congruencial e equivalência}
+
+A transformação não envia as soluções para pontos inteiros arbitrários. Como \(u\) e \(v\) são ímpares positivos quando \(m,n\geq0\), suas imagens satisfazem
+\begin{equation}
+  X>0,\qquad Y>0,\qquad
+  X\equiv6\pmod{12},\qquad
+  Y\equiv18\pmod{36}.
+  \label{eq:filter}
+\end{equation}
+
+Reciprocamente, qualquer ponto inteiro de \(E\) que satisfaça \eqref{eq:filter} determina
+\begin{equation}
+  m=\frac{X-6}{12},
+  \qquad
+  n=\frac{Y-18}{36}.
+  \label{eq:inverse}
+\end{equation}
+Esses números são inteiros não negativos. Portanto, a mudança de variáveis estabelece uma bijeção entre as soluções não negativas da equação original e o subconjunto de \(E(\mathbb{Z})\) determinado por \eqref{eq:filter}.
+
+\section{Certificado do grupo de Mordell-Weil e dos pontos inteiros}
+\label{sec:certificate}
+
+\subsection{Protocolo computacional}
+
+O cálculo foi executado no serviço público SageMathCell em 17 de setembro de 2026 com \texttt{proof.all(True)}. A curva usada foi o modelo integral mínimo
+\(Y^2=X^3+36X-108\).
+O posto e os geradores foram solicitados com prova ativada. Em seguida, a saturação da base foi calculada sem limitar o primo de saturação, e a rotina \texttt{integral\_points} recebeu explicitamente essa base.
+
+A documentação do SageMath estabelece que \texttt{integral\_points} retorna todos os pontos inteiros quando \texttt{mw\_base} gera o grupo de Mordell-Weil módulo torção; também alerta que uma base incompleta pode omitir pontos \cite{sage-docs}. Neste caso, \texttt{gens(proof=True)} forneceu um único gerador, e \texttt{saturation} retornou índice \(1\). A etapa de saturação usa um limite para os possíveis primos do índice e prova a saturação por reduções em corpos finitos \cite{sage-docs}.
+
+\subsection{Saída certificada}
+
+\begin{table}[H]
+\centering
+\caption{Dados certificados da curva elíptica.}
+\label{tab:certificate}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{0.88\linewidth}{>{\raggedright\arraybackslash}p{0.34\linewidth}X}
+\toprule
+\textbf{Invariante} & \textbf{Resultado}\\
+\midrule
+Modelo mínimo & \(Y^2=X^3+36X-108\)\\
+Discriminante & \(-8024832\)\\
+Condutor & \(3096\)\\
+Posto sobre \(\mathbb{Q}\) & \(1\)\\
+Gerador livre & \(P=(6,18)\)\\
+Índice de saturação & \(1\)\\
+Torção & trivial\\
+Pontos inteiros afins & \(6\)\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Em particular,
+\begin{equation}
+  \operatorname{rank}E(\mathbb{Q})=1,
+  \qquad
+  E(\mathbb{Q})_{\mathrm{tors}}=\{O\},
+  \qquad
+  E(\mathbb{Q})=\langle(6,18)\rangle.
+  \label{eq:mw}
+\end{equation}
+
+A lista completa fornecida pela rotina de pontos integrais é
+\begin{equation}
+  E(\mathbb{Z})
+  =\{(4,\pm10),(6,\pm18),(186,\pm2538)\}.
+  \label{eq:integralpoints}
+\end{equation}
+
+No modo detalhado, a redução produziu limite \(7\) para o coeficiente na base e limite
+\[
+  |X|\leq4.08970269937241\times10^8
+\]
+para a busca final. O algoritmo encontrou as abscissas integrais \(4\), \(6\) e \(186\), totalizando os seis pontos de \eqref{eq:integralpoints}.
+
+\subsection{Conclusão da demonstração}
+
+\begin{proof}[Demonstração]
+Pela bijeção da seção anterior, basta aplicar o filtro \eqref{eq:filter} à lista completa \eqref{eq:integralpoints}.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lll}
+\toprule
+\textbf{Ponto de \(E(\mathbb{Z})\)} & \textbf{Condição} & \textbf{Par recuperado}\\
+\midrule
+\((4,\pm10)\) & \(X\not\equiv6\pmod{12}\) & nenhum\\
+\((6,18)\) & admissível & \((n,m)=(0,0)\)\\
+\((6,-18)\) & \(Y<0\) & nenhum não negativo\\
+\((186,2538)\) & admissível & \((n,m)=(70,15)\)\\
+\((186,-2538)\) & \(Y<0\) & nenhum não negativo\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Assim, as únicas soluções não negativas são \((0,0)\) e \((70,15)\). Restringindo a \(n,m\geq1\), permanece somente \((70,15)\), cujo valor comum é \(14911\). Isso prova o Teorema~1 e o Corolário~1.
+\end{proof}
+
+\section{Estrutura do ponto excepcional}
+
+\subsection{Trajetória no grupo elíptico}
+
+A lei de grupo fornece uma leitura estrutural adicional. Se \(P=(6,18)\) é o gerador escolhido, então
+\begin{equation}
+  P=(6,18),
+  \qquad
+  2P=(4,-10),
+  \qquad
+  -3P=(186,2538).
+  \label{eq:multiples}
+\end{equation}
+
+O ponto \(P\) codifica a solução trivial. O ponto \(2P\) continua inteiro, mas não pertence à classe \(X\equiv6\pmod{12}\). O ponto \(-3P\) retorna à grade congruencial e codifica a única solução positiva. Portanto, a trajetória cartográfica corresponde, neste caso, à multiplicação no grupo \(E(\mathbb{Q})\) seguida da interseção com uma classe de congruência em \(E(\mathbb{Z})\).
+
+\subsection{Decomposição ciclotômica}
+
+Para o expoente \(3\),
+\(\Dd{3}{n}=\Phi_3(n+1,n)\).
+Para o expoente \(4\), a identidade \eqref{eq:cyclotomic} dá
+\[
+  \Dd{4}{m}=\Phi_2(m+1,m)\Phi_4(m+1,m).
+\]
+Na solução positiva,
+\begin{equation}
+  \Dd{4}{15}
+  =\Phi_2(16,15)\Phi_4(16,15)
+  =31\cdot481
+  =14911.
+  \label{eq:cyclo4}
+\end{equation}
+
+O fator \(481\) pode ser isolado formalmente como
+\begin{equation}
+  481
+  =\gcd\!\left(\Phi_3(71,70),\Phi_4(16,15)\right).
+  \label{eq:pillar}
+\end{equation}
+
+Esse máximo divisor comum é o objeto chamado pilar na terminologia cartográfica. Ele também possui a decomposição
+\begin{equation}
+  481=\Phi_4(16,15)=\Dd{2}{6}\Dd{3}{3}=13\cdot37.
+  \label{eq:481}
+\end{equation}
+
+\subsection{Dado local associado ao primo 37}
+
+A congruência
+\(\Dd{3}{n}\equiv0\pmod{37}\)
+tem discriminante
+\(-3\equiv34\pmod{37}\).
+Como \(16^2\equiv34\pmod{37}\), as duas raízes são \(3\) e \(33\). Consequentemente,
+\begin{equation}
+  37\mid\Dd{3}{n}
+  \quad\Longleftrightarrow\quad
+  n\equiv3\ \text{ou}\ 33\pmod{37}.
+  \label{eq:anchor}
+\end{equation}
+
+O ponto \(n=70\) pertence à classe \(33\) módulo \(37\). O dado local \((37,\{3,33\})\) associado a \(\Phi_3\) é a âncora cartográfica desta colisão. A terminologia formal evita tratar o primo isoladamente: a informação relevante inclui o índice ciclotômico e as classes de raízes.
+
+\subsection{Comparação com a camada de expoente 6}
+
+A igualdade
+\(\Dd{3}{33}=\Dd{6}{3}=3367\),
+verificada diretamente, não participa da prova do Teorema~1, mas explica a origem da observação sobre \(481\). De fato,
+\begin{equation}
+  \Dd{6}{3}
+  =\Phi_2(4,3)\Phi_3(4,3)\Phi_6(4,3)
+  =7\cdot37\cdot13
+  =3367.
+  \label{eq:d6}
+\end{equation}
+
+O subproduto
+\(\Phi_3(4,3)\Phi_6(4,3)=37\cdot13=481\)
+reaparece. Isso motiva estudar máximos divisores comuns entre componentes ciclotômicos avaliados em colisões de expoentes distintos. A recorrência de \(481\) é um fato aritmético demonstrado nesses dois exemplos; sua universalidade em outras camadas permanece aberta.
+
+\section{Levantamento divisorial e matriz de colisões}
+
+Quando \(e=kd\), a diferença de potências fornece a identidade de levantamento
+\begin{equation}
+  \Dd{kd}{n}
+  =\Dd{d}{n}
+  \sum_{j=0}^{k-1}(n+1)^{d(k-1-j)}n^{dj}.
+  \label{eq:lifting}
+\end{equation}
+
+O cofator tem grau \(d(k-1)\) e, em geral, não é linear. O fator \(2n+1\) é especificamente \(\Phi_2(n+1,n)\); ele aparece, por exemplo, na decomposição
+\[
+  \Dd{6}{n}
+  =\Dd{3}{n}\Phi_2(n+1,n)\Phi_6(n+1,n),
+\]
+mas não representa sozinho o levantamento geral.
+
+Para organizar colisões entre duas camadas, pode-se definir a matriz de diferenças intercamadas
+\begin{equation}
+  M_{n,m}^{d,e}=\Dd{d}{n}-\Dd{e}{m}.
+  \label{eq:matrix}
+\end{equation}
+
+Os zeros de \(M^{d,e}\) correspondem exatamente às colisões
+\(\Dd{d}{n}=\Dd{e}{m}\).
+A matriz binária obtida substituindo cada entrada por \(1\) quando ela é zero e por \(0\) caso contrário é a matriz de incidência das colisões. Essa definição formaliza a antiga expressão \emph{matriz de defeito} sem atribuir conteúdo geométrico ao expoente.
+
+\section{Alcance do resultado e problemas abertos}
+
+O Teorema~1 resolve integralmente a interseção entre as camadas de expoentes \(3\) e \(4\). Ele não demonstra uma classificação geral das colisões entre expoentes primos e compostos, nem estabelece que todo divisor comum recorrente tenha papel causal. Em particular, a decomposição
+\[
+  14911=31\cdot13\cdot37
+\]
+descreve a única colisão dessa interseção, mas a unicidade não transforma automaticamente cada fator em um invariante universal.
+
+Três direções permanecem naturais:
+\begin{itemize}
+  \item classificar as soluções de \(\Dd{3}{n}=\Dd{2k}{m}\), para \(k\geq3\), por curvas elípticas ou curvas de gênero superior;
+  \item determinar quando dados locais de raízes ciclotômicas se propagam para colisões globais;
+  \item testar se divisores comuns de componentes ciclotômicos avaliados, como \(481\), reaparecem em outras interseções sem serem impostos pela escolha dos exemplos.
+\end{itemize}
+
+Para cada nova igualdade, o padrão mínimo de prova deve separar descoberta numérica de completude: a varredura sugere candidatos; a geometria da curva e a determinação certificada dos pontos integrais encerram o caso.
+
+\section{Conclusão}
+
+A igualdade entre a primeira diferença cúbica e a primeira diferença quártica reduz-se à curva elíptica
+\(Y^2=X^3+36X-108\).
+A determinação completa de \(E(\mathbb{Z})\), combinada com o filtro
+\(X\equiv6\pmod{12}\) e \(Y\equiv18\pmod{36}\),
+prova que a única colisão positiva é
+\[
+  \Dd{3}{70}=\Dd{4}{15}=14911.
+\]
+
+O resultado converte uma observação de busca em uma classificação sem limite numérico. A estrutura de grupo mostra que a solução positiva é representada por \(-3P\), onde \(P=(6,18)\) gera \(E(\mathbb{Q})\), enquanto a fatoração ciclotômica identifica \(481\) como divisor comum de componentes avaliados. Esses fatos fornecem uma base formal para investigar outras camadas sem confundir nomenclatura cartográfica, evidência computacional e teorema demonstrado.
+
+\appendix
+
+\section{Código reprodutível em SageMath}
+\label{app:sage}
+
+O bloco abaixo reproduz o cálculo. A chamada \texttt{version()} deve permanecer no registro arquivado de qualquer execução usada para submissão editorial. A configuração \texttt{proof.all(True)} impede que rotinas compatíveis aceitem resultados condicionais sem sinalização.
+
+\begin{lstlisting}[style=sage]
+proof.all(True)
+print("SAGE_VERSION", version())
+
+E = EllipticCurve(QQ, [0, 0, 0, 36, -108])
+print("CURVE", E)
+print("DISCRIMINANT", E.discriminant())
+print("MINIMAL_MODEL", E.global_minimal_model())
+print("CONDUCTOR", E.conductor())
+print("RANK", E.rank(proof=True))
+
+G = E.gens(proof=True)
+print("GENERATORS", G)
+print("SATURATION", E.saturation(G))
+print("TORSION_POINTS", E.torsion_points())
+
+pts = E.integral_points(
+    mw_base=G,
+    both_signs=True,
+    verbose=True
+)
+print("ALL_INTEGRAL_POINTS", pts)
+print("COUNT", len(pts))
+
+admissible = []
+for P in pts:
+    X, Y = ZZ(P[0]), ZZ(P[1])
+    if X > 0 and Y > 0 and X % 12 == 6 and Y % 36 == 18:
+        m = (X - 6) // 12
+        n = (Y - 18) // 36
+        admissible.append((n, m, X, Y))
+print("ADMISSIBLE", admissible)
+\end{lstlisting}
+
+\section{Saída relevante da execução}
+
+\begin{lstlisting}[style=output]
+CURVE Elliptic Curve defined by y^2 = x^3 + 36*x - 108
+DISCRIMINANT -8024832
+MINIMAL_MODEL Elliptic Curve defined by y^2 = x^3 + 36*x - 108
+CONDUCTOR 3096
+RANK 1
+GENERATORS [(6 : 18 : 1)]
+SATURATION ([(6 : 18 : 1)], 1, 0.364124281980962)
+TORSION_POINTS [(0 : 1 : 0)]
+Using mw_basis [(6 : 18 : 1)]
+starting search using coefficient bound 7
+and |x| bound 4.08970269937241e8
+x-coords of extra integral points: [4, 6, 186]
+Total number of integral points: 6
+ALL_INTEGRAL_POINTS
+[(4 : -10 : 1), (4 : 10 : 1),
+ (6 : -18 : 1), (6 : 18 : 1),
+ (186 : -2538 : 1), (186 : 2538 : 1)]
+COUNT 6
+ADMISSIBLE [(0, 0, 6, 18), (70, 15, 186, 2538)]
+\end{lstlisting}
+
+\begingroup
+\small
+\setlength{\itemsep}{0.15em}
+\setlength{\parsep}{0pt}
+\setlength{\parskip}{0pt}
+\begin{thebibliography}{9}
+
+\bibitem{cohen}
+H. Cohen,
+\emph{Number Theory, Volume I: Tools and Diophantine Equations},
+Graduate Texts in Mathematics 239,
+Springer, 2007.
+
+\bibitem{cremona}
+J. E. Cremona,
+\emph{Algorithms for Modular Elliptic Curves},
+2nd edition,
+Cambridge University Press, 1997.
+
+\bibitem{silverman}
+J. H. Silverman,
+\emph{The Arithmetic of Elliptic Curves},
+2nd edition,
+Graduate Texts in Mathematics 106,
+Springer, 2009.
+
+\bibitem{sage-docs}
+The Sage Developers,
+\emph{Elliptic curves over the rational numbers},
+SageMath Reference Manual, documentation version 10.8.
+\url{https://doc.sagemath.org/html/en/reference/arithmetic_curves/sage/schemes/elliptic_curves/ell_rational_field.html}.
+Accessed 17 September 2026.
+
+\bibitem{sagemath}
+The Sage Developers,
+\emph{SageMath, the Sage Mathematics Software System}.
+\url{https://www.sagemath.org}.
+Accessed 17 September 2026.
+
+\bibitem{stroeker-tzanakis}
+R. J. Stroeker and N. Tzanakis,
+\emph{Solving elliptic Diophantine equations by estimating linear forms in elliptic logarithms},
+Acta Arithmetica 67, no. 2, 177--196, 1994.
+
+\end{thebibliography}
+\endgroup
+
+\end{document}
