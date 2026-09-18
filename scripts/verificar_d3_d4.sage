@@ -134,8 +134,6 @@ def certify_elliptic_curve():
 
 def generate_curve_svg(certificate, output_path=SVG_OUTPUT):
     """Gera uma figura vetorial; ela ilustra, mas não substitui, a prova."""
-    import math
-
     import matplotlib as mpl
 
     mpl.use("Agg")
