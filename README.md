@@ -1,74 +1,21 @@
-# Interseção entre diferenças progressivas cúbicas e quárticas
+MIT License
 
-*Classificação completa por meio de uma curva elíptica*
+Copyright (c) 2026 Zaqueu Ribeiro
 
-**Autor:** Zaqueu Ribeiro
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-**Identificação complementar:** SINGULAR
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-**Data da versão:** 17 de setembro de 2026
-
-**Status:** pré-publicação independente
-
-O artigo estuda as diferenças progressivas
-
-$$D_d(n)=(n+1)^d-n^d$$
-
-e a igualdade entre as camadas cúbica e quártica. O resultado principal apresentado no artigo é, para inteiros não negativos $n,m$,
-
-$$D_3(n)=D_4(m) \iff (n,m)=(0,0)\ \text{ou}\ (70,15).$$
-
-Para as camadas positivas $\mathcal{L}_d=\{D_d(n):n\in\mathbb{Z}_{\geq1}\}$, a consequência é
-
-$$\mathcal{L}_3\cap\mathcal{L}_4=\{14911\}.$$
-
-A completude é obtida no artigo por redução à curva elíptica
-
-$$Y^2=X^3+36X-108,$$
-
-com determinação dos pontos inteiros e aplicação de condições de congruência. O artigo contém um certificado computacional reproduzível em SageMath. Os problemas abertos discutidos no texto permanecem distintos do resultado principal.
-
-O [artigo em PDF](paper/Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.pdf) e o [fonte LaTeX](paper/Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex) estão disponíveis em `paper/`.
-
-## Compilação
-
-Com `pdflatex` e os pacotes LaTeX utilizados pelo artigo instalados:
-
-```bash
-cd paper
-pdflatex Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex
-pdflatex Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex
-```
-
-## Verificação computacional
-
-O certificado executável está em
-[`scripts/verificar_d3_d4.sage`](scripts/verificar_d3_d4.sage). Com SageMath
-10.8 ou versão compatível:
-
-```bash
-sage scripts/verificar_d3_d4.sage
-```
-
-O script ativa `proof.all(True)`, verifica simbolicamente a mudança de
-variáveis, certifica o posto e a saturação da base de Mordell--Weil, enumera
-todos os pontos inteiros da curva e aplica o filtro congruencial. Também realiza
-uma busca monotônica até $10^4$ apenas como teste de sanidade; a completude do
-resultado vem da enumeração certificada dos pontos inteiros, não dessa busca
-finita. Qualquer divergência encerra a execução com erro de asserção.
-
-A mesma execução gera a figura vetorial
-[`figures/curva_eliptica_d3_d4.svg`](figures/curva_eliptica_d3_d4.svg), com os
-seis pontos integrais da curva e destaque para os dois pontos que passam pelo
-filtro congruencial. A visualização é ilustrativa; a prova de completude continua
-sendo dada pela enumeração certificada.
-
-![Curva elíptica e seus pontos integrais](figures/curva_eliptica_d3_d4.svg)
-
-## Integridade e citação
-
-O arquivo `CHECKSUMS.sha256` registra os hashes SHA-256 do fonte e do PDF fornecidos pelo autor. O conteúdo desses arquivos foi preservado integralmente; apenas seus nomes foram padronizados. Os dados para citação estão em `CITATION.cff`.
-
-Na preparação deste repositório, o PDF fornecido foi aberto e suas nove páginas foram renderizadas. Não foi realizada recompilação local, pois `pdflatex` não estava instalado no ambiente de preparação; portanto, não foi possível comparar o PDF fornecido com uma nova compilação.
-
-Todos os direitos reservados ao autor.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

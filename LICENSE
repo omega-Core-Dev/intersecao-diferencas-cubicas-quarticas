@@ -1,0 +1,81 @@
+# Interseção entre diferenças progressivas cúbicas e quárticas
+
+*Classificação completa por meio de uma curva elíptica*
+
+**Autor:** Zaqueu Ribeiro
+
+**Identificação complementar:** SINGULAR
+
+**Data da versão:** 17 de setembro de 2026
+
+**Status:** pré-publicação independente
+
+O artigo estuda as diferenças progressivas
+
+$$D_d(n)=(n+1)^d-n^d$$
+
+e a igualdade entre as camadas cúbica e quártica. O resultado principal apresentado no artigo é, para inteiros não negativos $n,m$,
+
+$$D_3(n)=D_4(m) \iff (n,m)=(0,0)\ \text{ou}\ (70,15).$$
+
+Para as camadas positivas $\mathcal{L}_d=\{D_d(n):n\in\mathbb{Z}_{\geq1}\}$, a consequência é
+
+$$\mathcal{L}_3\cap\mathcal{L}_4=\{14911\}.$$
+
+A completude é obtida no artigo por redução à curva elíptica
+
+$$Y^2=X^3+36X-108,$$
+
+com determinação dos pontos inteiros e aplicação de condições de congruência. O artigo contém um certificado computacional reproduzível em SageMath. Os problemas abertos discutidos no texto incluem extensões para outras interseções, mecanismos de propagação de dados locais e comparação de estruturas ciclotômicas.
+
+O [artigo em PDF](paper/Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.pdf) e o [fonte LaTeX](paper/Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex) estão disponíveis em `paper/`.
+
+## Compilação
+
+Com `pdflatex` e os pacotes LaTeX utilizados pelo artigo instalados:
+
+```bash
+cd paper
+pdflatex Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex
+pdflatex Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex
+```
+
+## Verificação computacional
+
+O certificado executável está em
+[`scripts/verificar_d3_d4.sage`](scripts/verificar_d3_d4.sage). Com SageMath
+10.8 ou versão compatível:
+
+```bash
+sage scripts/verificar_d3_d4.sage
+```
+
+O script ativa `proof.all(True)`, verifica simbolicamente a mudança de
+variáveis, certifica o posto e a saturação da base de Mordell--Weil, enumera
+todos os pontos inteiros da curva e aplica o filtro congruencial. Também realiza
+uma busca monotônica até $10^4$ apenas como teste de sanidade; a completude do
+resultado vem da enumeração certificada dos pontos inteiros, não dessa busca
+finita. Qualquer divergência encerra a execução com erro de asserção.
+
+A mesma execução gera a figura vetorial
+[`figures/curva_eliptica_d3_d4.svg`](figures/curva_eliptica_d3_d4.svg), com os
+seis pontos integrais da curva e destaque para os dois pontos que passam pelo
+filtro congruencial. A visualização é ilustrativa; a prova de completude continua
+sendo dada pela enumeração certificada.
+
+![Curva elíptica e seus pontos integrais](figures/curva_eliptica_d3_d4.svg)
+
+## Integridade e citação
+
+O arquivo `CHECKSUMS.sha256` registra os hashes SHA-256 do fonte e do PDF fornecidos pelo autor. O conteúdo desses arquivos foi preservado integralmente; apenas seus nomes foram padronizados. Os hashes foram gerados a partir do PDF e do .tex originais e servem como verificação de integridade do arquivo arquivado.
+
+Na preparação deste repositório, o PDF fornecido foi aberto e suas nove páginas foram renderizadas. Não foi realizada recompilação local, pois `pdflatex` não estava instalado no ambiente de execução do repositório. O material preservado e os scripts de verificação são o conteúdo objetivo deste projeto.
+
+## Licença
+
+- O código, os scripts em `scripts/` e os materiais executáveis deste repositório estão licenciados sob a [MIT License](LICENSE).
+- O artigo, a prova matemática, a documentação e as ilustrações em `paper/` e `figures/` estão licenciados sob a [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+- Quando qualquer parte for reutilizada ou reaproveitada, a atribuição correta ao autor e ao trabalho deve ser mantida.
+- A licença do repositório no GitHub foi definida como MIT para compatibilidade com a interface do GitHub; a atribuição do texto acadêmico e da arte permanece sob CC BY 4.0.
+
+Todos os direitos reservados ao autor.
