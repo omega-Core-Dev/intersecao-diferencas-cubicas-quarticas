@@ -40,6 +40,23 @@ pdflatex Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex
 pdflatex Intersecao_Diferencas_Cubicas_Quarticas_Zaqueu_Ribeiro.tex
 ```
 
+## Verificação computacional
+
+O certificado executável está em
+[`scripts/verificar_d3_d4.sage`](scripts/verificar_d3_d4.sage). Com SageMath
+10.8 ou versão compatível:
+
+```bash
+sage scripts/verificar_d3_d4.sage
+```
+
+O script ativa `proof.all(True)`, verifica simbolicamente a mudança de
+variáveis, certifica o posto e a saturação da base de Mordell--Weil, enumera
+todos os pontos inteiros da curva e aplica o filtro congruencial. Também realiza
+uma busca monotônica até $10^4$ apenas como teste de sanidade; a completude do
+resultado vem da enumeração certificada dos pontos inteiros, não dessa busca
+finita. Qualquer divergência encerra a execução com erro de asserção.
+
 ## Integridade e citação
 
 O arquivo `CHECKSUMS.sha256` registra os hashes SHA-256 do fonte e do PDF fornecidos pelo autor. O conteúdo desses arquivos foi preservado integralmente; apenas seus nomes foram padronizados. Os dados para citação estão em `CITATION.cff`.
