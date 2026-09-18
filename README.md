@@ -57,6 +57,14 @@ uma busca monotônica até $10^4$ apenas como teste de sanidade; a completude do
 resultado vem da enumeração certificada dos pontos inteiros, não dessa busca
 finita. Qualquer divergência encerra a execução com erro de asserção.
 
+A mesma execução gera a figura vetorial
+[`figures/curva_eliptica_d3_d4.svg`](figures/curva_eliptica_d3_d4.svg), com os
+seis pontos integrais da curva e destaque para os dois pontos que passam pelo
+filtro congruencial. A visualização é ilustrativa; a prova de completude continua
+sendo dada pela enumeração certificada.
+
+![Curva elíptica e seus pontos integrais](figures/curva_eliptica_d3_d4.svg)
+
 ## Integridade e citação
 
 O arquivo `CHECKSUMS.sha256` registra os hashes SHA-256 do fonte e do PDF fornecidos pelo autor. O conteúdo desses arquivos foi preservado integralmente; apenas seus nomes foram padronizados. Os dados para citação estão em `CITATION.cff`.
